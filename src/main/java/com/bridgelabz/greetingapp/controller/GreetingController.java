@@ -1,6 +1,7 @@
 package com.bridgelabz.greetingapp.controller;
 
 import com.bridgelabz.greetingapp.entity.Greeting;
+import com.bridgelabz.greetingapp.entity.User;
 import com.bridgelabz.greetingapp.service.IGreetingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +28,18 @@ public class GreetingController {
         return new Greeting(counter.incrementAndGet(),String.format(template,name));
     }
 
+//    @GetMapping("/greeting")
+////    public String greeting(){
+////        return greetingService.getGreetingMessage();
+////    }
+
     @GetMapping("/greeting")
-    public String greeting(){
-        return greetingService.getGreetingMessage();
+    public String greeting(@RequestParam(name = "firstName", defaultValue = "Hello") String firstName,
+                           @RequestParam(name = "lastName", defaultValue = "World") String lastName){
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        return greetingService.getGreetingMessage(user);
     }
 
 }
